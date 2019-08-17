@@ -61,16 +61,17 @@ def create_loss_function(loss_function, output_size=OUTPUT_SIZE):
     return calc_loss
 
 
-net = Net()
-mse_loss_function = nn.MSELoss()
-sgd = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE)
+if __name__ == "__main__":
+    net = Net()
+    mse_loss_function = nn.MSELoss()
+    sgd = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE)
 
-train_loader = get_train_loader()
-train_network(train_loader, net, NUM_EPOCHS, sgd,
-      create_input_reshaper(),
-      create_loss_function(mse_loss_function))
+    train_loader = get_train_loader()
+    train_network(train_loader, net, NUM_EPOCHS, sgd,
+                  create_input_reshaper(),
+                  create_loss_function(mse_loss_function))
 
-print("")
+    print("")
 
-test_loader = get_test_loader()
-test_network(test_loader, net, create_input_reshaper())
+    test_loader = get_test_loader()
+    test_network(test_loader, net, create_input_reshaper())
