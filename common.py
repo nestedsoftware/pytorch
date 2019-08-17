@@ -5,23 +5,34 @@ import torchvision.datasets as datasets
 BATCH_SIZE = 10
 
 # transforms each PIL.Image to a tensor that can be used as input in pytorch
-transform = transforms.Compose([transforms.ToTensor()])
-
-train_dataset = datasets.MNIST(root='./data', train=True, transform=transform,
-                               download=True)
-test_dataset = datasets.MNIST(root='./data', train=False, transform=transform,
-                              download=True)
-
-train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
-                                           batch_size=BATCH_SIZE,
-                                           shuffle=True)
-
-test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
-                                          batch_size=BATCH_SIZE,
-                                          shuffle=False)
+transformations = transforms.Compose([transforms.ToTensor()])
 
 
-def train(data_loader, model, num_epochs, optimizer, reshape_input, calc_loss):
+def get_dataset(root="./data", train=True, transform=transformations,
+                download=True):
+    return datasets.MNIST(root=root, train=train, transform=transform,
+                          download=download)
+
+
+def get_loader(dataset, batch_size=BATCH_SIZE, shuffle=True):
+    return torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size,
+                                       shuffle=shuffle)
+
+
+def get_train_loader():
+    train_dataset = get_dataset()
+    train_loader = get_loader(train_dataset)
+    return train_loader
+
+
+def get_test_loader():
+    test_dataset = get_dataset(train=False)
+    test_loader = get_loader(test_dataset, shuffle=False)
+    return test_loader
+
+
+def train_network(data_loader, model, num_epochs, optimizer, reshape_input,
+                  calc_loss):
     num_batches = len(data_loader)
     for epoch in range(num_epochs):
         for batch in enumerate(data_loader):
@@ -40,7 +51,7 @@ def train(data_loader, model, num_epochs, optimizer, reshape_input, calc_loss):
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'.format(*p))
 
 
-def test(data_loader, model, reshape):
+def test_network(data_loader, model, reshape):
     with torch.no_grad():
         correct = 0
         total = 0

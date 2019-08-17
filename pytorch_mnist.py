@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 
-from common import train_loader, test_loader, train, test
+from common import (get_train_loader, get_test_loader, train_network,
+                    test_network)
 
 INPUT_SIZE = 28 * 28
 OUTPUT_SIZE = 10
@@ -19,6 +20,7 @@ class Net(nn.Module):
         x = torch.sigmoid(self.hidden_layer(x))
         x = torch.sigmoid(self.output_layer(x))
         return x
+
 
 # e.g. convert 3 to [0., 0., 0., 1., 0., 0., 0., 0., 0., 0.] for comparison
 # with output from network
@@ -63,10 +65,12 @@ net = Net()
 mse_loss_function = nn.MSELoss()
 sgd = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE)
 
-train(train_loader, net, NUM_EPOCHS, sgd,
+train_loader = get_train_loader()
+train_network(train_loader, net, NUM_EPOCHS, sgd,
       create_input_reshaper(),
       create_loss_function(mse_loss_function))
 
 print("")
 
-test(test_loader, net, create_input_reshaper())
+test_loader = get_test_loader()
+test_network(test_loader, net, create_input_reshaper())

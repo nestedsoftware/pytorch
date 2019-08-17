@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 
-from common import train_loader, test_loader, train, test
+from common import (get_train_loader, get_test_loader, train_network,
+                    test_network)
 
 INPUT_SIZE = 28*28
 OUTPUT_SIZE = 10
@@ -35,8 +36,11 @@ net = Net()
 loss_func = nn.CrossEntropyLoss()
 sgd = torch.optim.SGD(net.parameters(), lr=0.03, weight_decay=0.00001)
 
-train(train_loader, net, NUM_EPOCHS, sgd, create_input_reshaper(), loss_func)
+train_loader = get_train_loader()
+train_network(train_loader, net, NUM_EPOCHS, sgd, create_input_reshaper(),
+              loss_func)
 
 print("")
 
-test(test_loader, net, create_input_reshaper())
+test_loader = get_test_loader()
+test_network(test_loader, net, create_input_reshaper())
