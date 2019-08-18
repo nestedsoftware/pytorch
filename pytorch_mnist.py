@@ -22,20 +22,21 @@ class Net(nn.Module):
         return x
 
 
-# e.g. convert 3 to [0., 0., 0., 1., 0., 0., 0., 0., 0., 0.] for comparison
-# with output from network
-def transform_expected_output(tensor_of_expected_outputs, output_size):
-    return torch.tensor([transform(expected_output.item(), output_size)
+def expand_expected_output(tensor_of_expected_outputs, output_size):
+    return torch.tensor([expand_single_output(expected_output.item(),
+                                              output_size)
                          for expected_output in tensor_of_expected_outputs])
 
 
-def transform(expected_output, output_size):
+# e.g. convert 3 to [0., 0., 0., 1., 0., 0., 0., 0., 0., 0.] for comparison
+# with output from network
+def expand_single_output(expected_output, output_size):
     x = [0.0 for _ in range(output_size)]
     x[expected_output] = 1.0
     return x
 
 
-def reshape_inputs(inputs, input_size):
+def reformat_images(images, input_size):
     # Remove channel and flatten images from 2-d to 1-d, i.e.
     # assuming batch size of 10, convert the tensor from
     # size (10, 1, 28, 28) to size (10, 784).
@@ -45,18 +46,18 @@ def reshape_inputs(inputs, input_size):
     # Since we specify `input_size`, which is 28*28, or 784,
     # the placeholder argument will become the number of batches,
     # which is 10 in this case.
-    return inputs.view(-1, input_size)
+    return images.view(-1, input_size)
 
 
 def create_input_reshaper(input_size=INPUT_SIZE):
     def reshape(images):
-        return reshape_inputs(images, input_size)
+        return reformat_images(images, input_size)
     return reshape
 
 
 def create_loss_function(loss_function, output_size=OUTPUT_SIZE):
     def calc_loss(outputs, target):
-        targets = transform_expected_output(target, output_size)
+        targets = expand_expected_output(target, output_size)
         return loss_function(outputs, targets)
     return calc_loss
 
