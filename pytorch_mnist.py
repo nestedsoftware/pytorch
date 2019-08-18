@@ -46,7 +46,7 @@ def reformat_images(images, input_size):
     # Since we specify `input_size`, which is 28*28, or 784,
     # the placeholder argument will become the number of batches,
     # which is 10 in this case.
-    return images.view(-1, input_size)
+    return images.reshape(-1, input_size)
 
 
 def create_input_reshaper(input_size=INPUT_SIZE):
