@@ -32,8 +32,7 @@ def create_input_reshaper():
     return reshape
 
 
-if __name__ == "__main__":
-    net = Net()
+def run_network(net):
     loss_func = nn.CrossEntropyLoss()
     sgd = torch.optim.SGD(net.parameters(), lr=0.03, weight_decay=0.00001)
 
@@ -45,3 +44,8 @@ if __name__ == "__main__":
 
     test_loader = get_test_loader()
     test_network(test_loader, net, create_input_reshaper())
+
+
+if __name__ == "__main__":
+    network = Net()
+    run_network(network)

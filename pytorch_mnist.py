@@ -61,8 +61,7 @@ def create_loss_function(loss_function, output_size=OUTPUT_SIZE):
     return calc_loss
 
 
-if __name__ == "__main__":
-    net = Net()
+def run_network(net):
     mse_loss_function = nn.MSELoss()
     sgd = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE)
 
@@ -75,3 +74,8 @@ if __name__ == "__main__":
 
     test_loader = get_test_loader()
     test_network(test_loader, net, create_input_reshaper())
+
+
+if __name__ == "__main__":
+    network = Net()
+    run_network(network)
