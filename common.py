@@ -61,8 +61,8 @@ def test_network(data_loader, model, reshape):
             images = reshape(images)
             outputs = model(images)
 
-            # get the maximum value from each output in the batch
-            predicted_outputs = torch.max(outputs.data, 1).indices
+            # get the predicted value from each output in the batch
+            predicted_outputs = torch.argmax(outputs, dim=1)
 
             total += expected_outputs.size(0)
             correct += (predicted_outputs == expected_outputs).sum()

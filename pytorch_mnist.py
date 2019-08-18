@@ -28,8 +28,8 @@ def expand_expected_output(tensor_of_expected_outputs, output_size):
                          for expected_output in tensor_of_expected_outputs])
 
 
-# e.g. convert 3 to [0., 0., 0., 1., 0., 0., 0., 0., 0., 0.] for comparison
-# with output from network
+# Expand expected output for comparison with the outputs from the network,
+# e.g. convert 3 to [0., 0., 0., 1., 0., 0., 0., 0., 0., 0.]
 def expand_single_output(expected_output, output_size):
     x = [0.0 for _ in range(output_size)]
     x[expected_output] = 1.0
