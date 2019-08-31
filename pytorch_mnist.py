@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 
 from common import (get_train_loader, get_test_loader, train_network,
-                    test_network)
+                    test_network, IMAGE_WIDTH)
 
-INPUT_SIZE = 28 * 28
+INPUT_SIZE = IMAGE_WIDTH * IMAGE_WIDTH
 OUTPUT_SIZE = 10
 NUM_EPOCHS = 30
 LEARNING_RATE = 3.0
