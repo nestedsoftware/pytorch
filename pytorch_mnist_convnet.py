@@ -77,7 +77,7 @@ class ConvNetTwoConvLayersReLu(nn.Module):
         return x
 
 
-class ConvNetTwoConvTwoFullyConnectedLayersWithDropout(nn.Module):
+class ConvNetTwoConvTwoDenseLayersWithDropout(nn.Module):
     def __init__(self):
         super().__init__()
         self.dropout = nn.Dropout(p=0.5)
@@ -112,7 +112,7 @@ class ConvNetTwoConvTwoFullyConnectedLayersWithDropout(nn.Module):
 
 def create_input_reshaper():
     def reshape(images):
-        return images  # not required for convolutional layer
+        return images  # reshaping not required for convolutional layer
     return reshape
 
 
