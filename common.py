@@ -30,7 +30,6 @@ def get_test_loader():
 
 def train_network(data_loader, model, num_epochs, optimizer, reshape_input,
                   calc_loss):
-    num_batches = len(data_loader)
     for epoch in range(num_epochs):
         model = model.train()
         for batch in enumerate(data_loader):
@@ -44,14 +43,15 @@ def train_network(data_loader, model, num_epochs, optimizer, reshape_input,
             loss.backward()
             optimizer.step()
 
-            if (i == 0) or ((i+1) % (num_batches / 10) == 0):
-                p = [epoch+1, num_epochs, i+1, num_batches, loss.item()]
-                print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'.format(*p))
+            # if (i == 0) or ((i+1) % (len(data_loader) / 10) == 0):
+            #     p = [epoch+1, num_epochs, i+1, num_batches, loss.item()]
+            #     print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'.format(*p))
 
-        test_network(get_test_loader(), model, reshape_input)
+        epoch_info = "Epoch {}/{}".format(epoch+1, num_epochs)
+        test_network(get_test_loader(), model, reshape_input, epoch_info)
 
 
-def test_network(data_loader, model, reshape):
+def test_network(data_loader, model, reshape, epoch_info=""):
     model = model.eval()
     with torch.no_grad():
         correct = 0
@@ -68,7 +68,10 @@ def test_network(data_loader, model, reshape):
             total += expected_outputs.size(0)
             correct += (predicted_outputs == expected_outputs).sum()
 
-        print(f"Test data results: {float(correct)/total}")
+        results_str = f"Test data results: {float(correct)/total}"
+        if epoch_info:
+            results_str += f", {epoch_info}"
+        print(results_str)
 
 
 def get_dataset(root="./data", train=True, transform=transformations,
