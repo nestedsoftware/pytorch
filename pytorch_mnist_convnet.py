@@ -52,7 +52,7 @@ class ConvNetTwoConvLayers(nn.Module):
         return x
 
 
-class ConvNetTwoConvLayersReLu(nn.Module):
+class ConvNetTwoConvLayersReLU(nn.Module):
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=20, kernel_size=5)
