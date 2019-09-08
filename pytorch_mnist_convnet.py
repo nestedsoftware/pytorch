@@ -82,8 +82,14 @@ class ConvNetTwoConvTwoDenseLayersWithDropout(nn.Module):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=20, kernel_size=5)
         self.conv2 = nn.Conv2d(in_channels=20, out_channels=40, kernel_size=5)
+
+        self.dropout1 = nn.Dropout(p=0.5)
         self.fc1 = nn.Linear(4*4*40, 1000)
+
+        self.dropout2 = nn.Dropout(p=0.5)
         self.fc2 = nn.Linear(1000, 1000)
+
+        self.dropout3 = nn.Dropout(p=0.5)
         self.out = nn.Linear(1000, OUTPUT_SIZE)
 
     def forward(self, x):
@@ -96,15 +102,15 @@ class ConvNetTwoConvTwoDenseLayersWithDropout(nn.Module):
         x = torch.max_pool2d(x, kernel_size=2, stride=2)
 
         x = x.view(-1, 4*4*40)
-        x = torch.dropout(x, p=0.5, train=self.training)
+        x = self.dropout1(x)
         x = self.fc1(x)
         x = torch.relu(x)
 
-        x = torch.dropout(x, p=0.5, train=self.training)
+        x = self.dropout2(x)
         x = self.fc2(x)
         x = torch.relu(x)
 
-        x = torch.dropout(x, p=0.5, train=self.training)
+        x = self.dropout3(x)
         x = self.out(x)
         return x
 
@@ -115,9 +121,9 @@ def create_input_reshaper():
     return reshape
 
 
-def do_training_run(net, loss_func=nn.CrossEntropyLoss(), num_epochs=60,
-                    lr=0.1, wd=0, train_loader=get_train_loader(),
-                    test_loader=get_test_loader()):
+def train_and_test_network(net, loss_func=nn.CrossEntropyLoss(), num_epochs=60,
+                           lr=0.1, wd=0, train_loader=get_train_loader(),
+                           test_loader=get_test_loader()):
     sgd = torch.optim.SGD(net.parameters(), lr=lr, weight_decay=wd)
 
     train_network(train_loader, net, num_epochs, sgd, create_input_reshaper(),
@@ -129,4 +135,4 @@ def do_training_run(net, loss_func=nn.CrossEntropyLoss(), num_epochs=60,
 
 
 if __name__ == "__main__":
-    do_training_run(ConvNetSimple())
+    train_and_test_network(ConvNetSimple())
