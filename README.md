@@ -1,4 +1,4 @@
-This project contains scripts to demonstrate basic PyTorch usage.  The code requires python 3, numpy, and pytorch. 
+This project contains scripts to demonstrate basic PyTorch usage.  The code requires python 3, numpy, and pytorch.
 
 To compare a manual backprop calculation with the equivalent PyTorch version, run:
 * `python backprop_manual_calculation.py` and
@@ -12,4 +12,4 @@ This network achieves about 97% accuracy on the test dataset, which seems consis
 To train a convolutional network (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310) of Michael Nielsen's book), run:
 * `python pytorch_mnist_convnet.py`
 
-This network achieves better than _99%_ accuracy on the test dataset, which is close to the results in the book (99.23%). However, in the book, a lambda value of _0.1_ is used for L2 weight regularization. My results got _a lot_ worse when using this value for weight decay. It's possible the network in the book only applied L2 regularization to the fully connected layers. My reading suggests _0.1_ is too high for a convolutional neural network, e.g. [How to use Weight Decay to Reduce Overfitting of Neural Networks in Keras](https://machinelearningmastery.com/how-to-reduce-overfitting-in-deep-learning-with-weight-regularization/). I've included a weight decay of _0.00001_ for reference, but I'm not sure whether it actually makes any improvement over just using no weight decay at all for this particular scenario.
+By default, `python pytorch_mnist_convnet.py` runs the simplest network, `ConvNetSimple`. To see how to run the other networks, you can look at examples in the associated blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17). So far, the best consistent results are about _99.6%_.
