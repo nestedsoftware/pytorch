@@ -45,17 +45,17 @@ def create_loss_function(loss_function, output_size=OUTPUT_SIZE):
 
 
 def run_network(net):
+    train_loader = get_train_loader()
     mse_loss_function = nn.MSELoss()
+    loss_function = create_loss_function(mse_loss_function)
     sgd = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE)
 
-    train_loader = get_train_loader()
-    train_network(train_loader, net, NUM_EPOCHS, sgd,
-                  create_loss_function(mse_loss_function))
+    train_network(net, train_loader, NUM_EPOCHS, loss_function, sgd)
 
     print("")
 
     test_loader = get_test_loader()
-    test_network(test_loader, net)
+    test_network(net, test_loader)
 
 
 if __name__ == "__main__":

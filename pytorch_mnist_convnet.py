@@ -115,16 +115,17 @@ class ConvNetTwoConvTwoDenseLayersWithDropout(nn.Module):
         return x
 
 
-def train_and_test_network(net, loss_func=nn.CrossEntropyLoss(), num_epochs=60,
-                           lr=0.1, wd=0, train_loader=get_train_loader(),
+def train_and_test_network(net, num_epochs=60, lr=0.1, wd=0,
+                           loss_function=nn.CrossEntropyLoss(),
+                           train_loader=get_train_loader(),
                            test_loader=get_test_loader()):
     sgd = torch.optim.SGD(net.parameters(), lr=lr, weight_decay=wd)
 
-    train_network(train_loader, net, num_epochs, sgd, loss_func)
+    train_network(net, train_loader, num_epochs, loss_function, sgd)
 
     print("")
 
-    test_network(test_loader, net)
+    test_network(net, test_loader)
 
 
 if __name__ == "__main__":
