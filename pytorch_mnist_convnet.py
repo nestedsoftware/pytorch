@@ -115,23 +115,16 @@ class ConvNetTwoConvTwoDenseLayersWithDropout(nn.Module):
         return x
 
 
-def create_input_reshaper():
-    def reshape(images):
-        return images  # reshaping not required for convolutional layer
-    return reshape
-
-
 def train_and_test_network(net, loss_func=nn.CrossEntropyLoss(), num_epochs=60,
                            lr=0.1, wd=0, train_loader=get_train_loader(),
                            test_loader=get_test_loader()):
     sgd = torch.optim.SGD(net.parameters(), lr=lr, weight_decay=wd)
 
-    train_network(train_loader, net, num_epochs, sgd, create_input_reshaper(),
-                  loss_func)
+    train_network(train_loader, net, num_epochs, sgd, loss_func)
 
     print("")
 
-    test_network(test_loader, net, create_input_reshaper())
+    test_network(test_loader, net)
 
 
 if __name__ == "__main__":

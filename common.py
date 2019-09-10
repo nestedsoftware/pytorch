@@ -28,14 +28,12 @@ def get_test_loader():
     return test_loader
 
 
-def train_network(data_loader, model, num_epochs, optimizer, reshape_input,
-                  calc_loss):
+def train_network(data_loader, model, num_epochs, optimizer, calc_loss):
     for epoch in range(num_epochs):
         model = model.train()
         for batch in enumerate(data_loader):
             i, (images, expected_outputs) = batch
 
-            images = reshape_input(images)
             outputs = model(images)
             loss = calc_loss(outputs, expected_outputs)
 
@@ -48,10 +46,10 @@ def train_network(data_loader, model, num_epochs, optimizer, reshape_input,
             #     print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'.format(*p))
 
         epoch_info = "Epoch {}/{}".format(epoch+1, num_epochs)
-        test_network(get_test_loader(), model, reshape_input, epoch_info)
+        test_network(get_test_loader(), model, epoch_info)
 
 
-def test_network(data_loader, model, reshape, epoch_info=""):
+def test_network(data_loader, model, epoch_info=""):
     model = model.eval()
     with torch.no_grad():
         correct = 0
@@ -59,7 +57,6 @@ def test_network(data_loader, model, reshape, epoch_info=""):
         for batch in data_loader:
             images, expected_outputs = batch
 
-            images = reshape(images)
             outputs = model(images)
 
             # get the predicted value from each output in the batch
