@@ -1,8 +1,10 @@
+import argparse
+
 import torch
 import torch.nn as nn
 
-from common import (get_train_loader, get_test_loader,
-                    train_network, test_network)
+from common import (get_train_loader, get_extended_train_loader,
+                    get_test_loader, train_network, test_network)
 
 OUTPUT_SIZE = 10
 
@@ -128,5 +130,45 @@ def train_and_test_network(net, num_epochs=60, lr=0.1, wd=0,
     test_network(net, test_loader)
 
 
+def choose_network(args):
+    if args.net == "simple":
+        return ConvNetSimple()
+    if args.net == "2conv":
+        return ConvNetTwoConvLayers()
+    if args.net == "relu":
+        return ConvNetTwoConvLayersReLU()
+    if args.net == "final":
+        return ConvNetTwoConvTwoDenseLayersWithDropout()
+
+
+def choose_train_loader(args):
+    if args.extend_data:
+        return get_extended_train_loader()
+
+    return get_train_loader()
+
+
+def main(args):
+    net = choose_network(args)
+    num_epochs = args.epochs
+    lr = args.lr
+    wd = args.wd
+    train_loader = choose_train_loader(args)
+    train_and_test_network(net, num_epochs=num_epochs, lr=lr, wd=wd,
+                           train_loader=train_loader)
+
+
 if __name__ == "__main__":
-    train_and_test_network(ConvNetSimple())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--net", help="which network to run",
+                        choices=["simple", "2conv", "relu",
+                                 "final"],
+                        default="simple")
+    parser.add_argument("--epochs", help="number of epochs", type=int,
+                        default=60)
+    parser.add_argument("--lr", help="learning rate", type=float, default=0.1)
+    parser.add_argument("--wd", help="weight decay", type=float, default=0)
+    parser.add_argument("--extend_data", help="use extended training data",
+                        action="store_true")
+
+    main(parser.parse_args())

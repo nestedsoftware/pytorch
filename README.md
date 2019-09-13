@@ -13,8 +13,27 @@ To train a fully connected network (as described in [chapter 1](http://neuralnet
 
 This network achieves about 97% accuracy on the test dataset, which seems consistent with the results in the book (96.59%). Blog post: [PyTorch Image Recognition with Dense Network](https://dev.to/nestedsoftware/pytorch-image-recognition-dense-network-3nbd)
 
-To train a convolutional network (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310) of Michael Nielsen's book), run:
+To train a convolutional network (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310) of Michael Nielsen's book), run the following.
 
-* `python pytorch_mnist_convnet.py`
+## Simple network: 
 
-By default, `python pytorch_mnist_convnet.py` runs the simplest network, `ConvNetSimple`. To see how to run the other networks, you can look at examples in the associated blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17). So far, the best consistent results are about _99.6%_.
+```python
+python pytorch_mnist_convnet.py
+```
+## Two convolutional layers: 
+```python
+python pytorch_mnist_convnet.py --net 2conv
+```
+## Two convolutional layers with ReLU: 
+```python
+python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005
+```
+## Two convolutional layers and extended training data: 
+```python
+python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005 --extend_data
+```
+## Final network: 
+```python
+python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
+```
+Associated blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17).
