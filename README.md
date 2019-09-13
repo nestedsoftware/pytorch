@@ -17,23 +17,23 @@ To train a convolutional network (as described in [chapter 6](http://neuralnetwo
 
 ## Simple network: 
 
-```python
+```
 python pytorch_mnist_convnet.py
 ```
 ## Two convolutional layers: 
-```python
+```
 python pytorch_mnist_convnet.py --net 2conv
 ```
 ## Two convolutional layers with ReLU: 
-```python
+```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005
 ```
 ## Two convolutional layers and extended training data: 
-```python
+```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005 --extend_data
 ```
 ## Final network: 
-```python
+```
 python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
 ```
 Associated blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17).
