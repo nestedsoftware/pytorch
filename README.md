@@ -15,24 +15,24 @@ This network achieves about 97% accuracy on the test dataset, which seems consis
 
 To train a convolutional network (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310) of Michael Nielsen's book), run the following.
 
-## Simple network: 
+Simple network: 
 
 ```
 python pytorch_mnist_convnet.py
 ```
-## Two convolutional layers: 
+Two convolutional layers: 
 ```
 python pytorch_mnist_convnet.py --net 2conv
 ```
-## Two convolutional layers with ReLU: 
+Two convolutional layers with ReLU: 
 ```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005
 ```
-## Two convolutional layers and extended training data: 
+Two convolutional layers and extended training data: 
 ```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005 --extend_data
 ```
-## Final network: 
+Final network: 
 ```
 python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
 ```
