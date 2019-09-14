@@ -48,10 +48,6 @@ def train_network(model, data_loader, num_epochs, loss_function, optimizer):
             loss.backward()
             optimizer.step()
 
-            # if (i == 0) or ((i+1) % (len(data_loader) / 10) == 0):
-            #     p = [epoch+1, num_epochs, i+1, num_batches, loss.item()]
-            #     print('Epoch [{}/{}], Batch [{}/{}], Loss: {:.4f}'.format(*p))
-
         epoch_info = "Epoch {}/{}".format(epoch+1, num_epochs)
         test_loader = get_test_loader()
         test_network(model, test_loader, epoch_info)

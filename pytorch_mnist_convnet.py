@@ -148,6 +148,20 @@ def choose_train_loader(args):
     return get_train_loader()
 
 
+def parse_command_line_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--net", help="which network to run",
+                        choices=["simple", "2conv", "relu", "final"],
+                        default="simple")
+    parser.add_argument("--epochs", help="number of epochs", type=int,
+                        default=60)
+    parser.add_argument("--lr", help="learning rate", type=float, default=0.1)
+    parser.add_argument("--wd", help="weight decay", type=float, default=0)
+    parser.add_argument("--extend_data", help="use extended training data",
+                        action="store_true")
+    return parser.parse_args()
+
+
 def main(args):
     net = choose_network(args)
     num_epochs = args.epochs
@@ -159,16 +173,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--net", help="which network to run",
-                        choices=["simple", "2conv", "relu",
-                                 "final"],
-                        default="simple")
-    parser.add_argument("--epochs", help="number of epochs", type=int,
-                        default=60)
-    parser.add_argument("--lr", help="learning rate", type=float, default=0.1)
-    parser.add_argument("--wd", help="weight decay", type=float, default=0)
-    parser.add_argument("--extend_data", help="use extended training data",
-                        action="store_true")
-
-    main(parser.parse_args())
+    main(parse_command_line_args())
