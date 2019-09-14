@@ -73,4 +73,3 @@ python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
 Test data results: 0.9959
 ```
 Blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17).
-~~~~
