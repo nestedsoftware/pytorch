@@ -2,8 +2,37 @@ This project contains scripts to demonstrate basic PyTorch usage.  The code requ
 
 To compare a manual backprop calculation with the equivalent PyTorch version, run:
 
-* `python backprop_manual_calculation.py` and
-* `python backprop_pytorch.py`
+```
+python backprop_manual_calculation.py
+w_l1 = 1.58
+b_l1 = -0.14
+w_l2 = 2.45
+b_l2 = -0.11
+a_l2 = 0.8506
+updated_w_l1 = 1.5814
+updated_b_l1 = -0.1383
+updated_w_l2 = 2.4529
+updated_b_l2 = -0.1062
+updated_a_l2 = 0.8515
+```
+and 
+```p
+python backprop_pytorch.py
+network topology: Net(
+  (hidden_layer): Linear(in_features=1, out_features=1, bias=True)
+  (output_layer): Linear(in_features=1, out_features=1, bias=True)
+)
+w_l1 = 1.58
+b_l1 = -0.14
+w_l2 = 2.45
+b_l2 = -0.11
+a_l2 = 0.8506
+updated_w_l1 = 1.5814
+updated_b_l1 = -0.1383
+updated_w_l2 = 2.4529
+updated_b_l2 = -0.1062
+updated_a_l2 = 0.8515
+```
 
 Blog post: [PyTorch Hello World](https://dev.to/nestedsoftware/pytorch-hello-world-37mo)
 
@@ -11,6 +40,7 @@ To train a fully connected network (as described in [chapter 1](http://neuralnet
 
 ```
 python pytorch_mnist.py
+Test data results: 0.9778
 ```
 This network achieves about 97% accuracy on the test dataset, which seems consistent with the results in the book (96.59%). Blog post: [PyTorch Image Recognition with Dense Network](https://dev.to/nestedsoftware/pytorch-image-recognition-dense-network-3nbd)
 
@@ -42,4 +72,5 @@ Final network:
 python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
 Test data results: 0.9959
 ```
-Associated blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17).
+Blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17).
+~~~~
