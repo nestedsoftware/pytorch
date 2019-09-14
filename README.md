@@ -15,8 +15,8 @@ updated_w_l2 = 2.4529
 updated_b_l2 = -0.1062
 updated_a_l2 = 0.8515
 ```
-and 
-```p
+and
+```
 python backprop_pytorch.py
 network topology: Net(
   (hidden_layer): Linear(in_features=1, out_features=1, bias=True)
@@ -46,28 +46,28 @@ This network achieves about 97% accuracy on the test dataset, which seems consis
 
 To train a convolutional network (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310) of Michael Nielsen's book), run the following.
 
-Simple network: 
+Simple network:
 
 ```
 python pytorch_mnist_convnet.py
 Test data results: 0.9894
 ```
-Two convolutional layers: 
+Two convolutional layers:
 ```
 python pytorch_mnist_convnet.py --net 2conv
 Test data results: 0.9915
 ```
-Two convolutional layers with ReLU: 
+Two convolutional layers with ReLU:
 ```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005
 Test data results: 0.9926
 ```
-Two convolutional layers and extended training data: 
+Two convolutional layers and extended training data:
 ```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005 --extend_data
 Test data results: 0.9942
 ```
-Final network: 
+Final network:
 ```
 python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
 Test data results: 0.9959
