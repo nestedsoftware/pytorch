@@ -1,5 +1,7 @@
 This project contains scripts to demonstrate basic PyTorch usage.  The code requires python 3, numpy, and pytorch.
 
+## Manual vs. PyTorch Backprop Calculation
+
 To compare a manual backprop calculation with the equivalent PyTorch version, run:
 
 ```
@@ -36,40 +38,57 @@ updated_a_l2 = 0.8515
 
 Blog post: [PyTorch Hello World](https://dev.to/nestedsoftware/pytorch-hello-world-37mo)
 
-To train a fully connected network (as described in [chapter 1](http://neuralnetworksanddeeplearning.com/chap1.html#exercise_358114) of [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/), by Michael Nielsen) on the mnist dataset, run:
+## MNIST Recognition
+
+The next examples recognize MNIST digits using a dense network at first, and then several convolutional network designs (examples are adapted from Michael Nielsen's book, Neural Networks and Deep Learning).
+
+I've added additional data normalization to the input since the original blog articles were published, using the code below ([common.py](https://github.com/nestedsoftware/pytorch/blob/master/common.py)):
+
+```python
+normalization = transforms.Normalize((0.1305,), (0.3081,))
+transformations = transforms.Compose([transforms.ToTensor(), normalization])
+```
+
+`0.1305` is the average value of the input data and `0.3081` is the standard deviation relative to the values generated just by applying `transforms.ToTensor()` to the raw data. The [data_normalization_calculations.md](https://github.com/nestedsoftware/pytorch/blob/master/data_normalization_calculations.md) file shows an easy way to obtain these values.
+
+To train a fully connected network on the MNIST dataset (as described in [chapter 1](http://neuralnetworksanddeeplearning.com/chap1.html#exercise_358114) of [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/), run:
 
 ```
 python pytorch_mnist.py
-Test data results: 0.9778
+Test data results: 0.9758
 ```
-This network achieves about 97% accuracy on the test dataset, which seems consistent with the results in the book (96.59%). Blog post: [PyTorch Image Recognition with Dense Network](https://dev.to/nestedsoftware/pytorch-image-recognition-dense-network-3nbd)
+Blog post: [PyTorch Image Recognition with Dense Network](https://dev.to/nestedsoftware/pytorch-image-recognition-dense-network-3nbd)
 
-To train a convolutional network (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310) of Michael Nielsen's book), run the following.
+To train convolutional networks (as described in [chapter 6](http://neuralnetworksanddeeplearning.com/chap6.html#problem_834310)), run the following.
 
 Simple network:
-
 ```
 python pytorch_mnist_convnet.py
-Test data results: 0.9894
+Test data results: 0.9891
 ```
+
 Two convolutional layers:
 ```
 python pytorch_mnist_convnet.py --net 2conv
-Test data results: 0.9915
+Test data results: 0.9913
 ```
+
 Two convolutional layers with ReLU:
 ```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005
-Test data results: 0.9926
+Test data results: 0.993
 ```
+
 Two convolutional layers and extended training data:
 ```
 python pytorch_mnist_convnet.py --net relu --lr 0.03 --wd 0.00005 --extend_data
-Test data results: 0.9942
+Test data results: 0.9943
 ```
+
 Final network:
 ```
 python pytorch_mnist_convnet.py --net final --epochs 40 --lr 0.005 --extend_data
-Test data results: 0.9959
+Test data results: 0.9964
 ```
+
 Blog post: [PyTorch Image Recognition with Convolutional Networks](https://dev.to/nestedsoftware/pytorch-image-recognition-with-convolutional-networks-4k17).

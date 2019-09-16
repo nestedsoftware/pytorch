@@ -13,8 +13,11 @@ IMAGE_WIDTH = 28
 
 BATCH_SIZE = 10
 
-# transforms each PIL.Image to a tensor that can be used as input in pytorch
-transformations = transforms.Compose([transforms.ToTensor()])
+# Transforms each PIL.Image to a tensor that can be used as input in pytorch
+# For source of normalization values, see data_normalization_calculations.md
+# We use the same normalization for the test data as what was used for training
+normalization = transforms.Normalize((0.1305,), (0.3081,))
+transformations = transforms.Compose([transforms.ToTensor(), normalization])
 
 
 def get_train_loader():
